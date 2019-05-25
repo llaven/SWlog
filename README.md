@@ -11,6 +11,7 @@ Instrucciones:
 
 1. Descargue el archivo swlog.sh y agregue permisos de ejecución: `chmod +x swlog.sh`
 2. Ejecute `./swlog.sh` y selecciones alguna opción.
+3. El registro de las estaciones captadas se guardan en un archivo de texto simple en formato CSV.
 
 
 ¡Qué viva la Radio!
