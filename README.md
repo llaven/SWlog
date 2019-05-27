@@ -34,12 +34,11 @@ Para no perder la tradición de la SWL este dato es una calificación subjetiva 
 **GRID**
 La radioafición ha distribuído el mundo en cuadrículas rectangulares llamadas GRID, ayudan a ubicar de forma aproximada (no exacta) la zona donde se encuentra el transmisor o receptor de una señal radioeléctrica, a partir de ello se puede calcular la distancia en kilómetros entre transmisor y receptor o viceversa.
 
-Obtengo esta información de dos sitios:
+Para obtener esta información ingrese a la opción Grid locator del menú principal.
 
 * Para conocer el GRID de algún punto geográfico: http://www.levinecentral.com/ham/grid_square.php
-* Para obtener la distancia entre transmisor y receptor: https://www.chris.org/cgi-bin/finddis
+* Para obtener la distancia entre transmisor y receptor: https://www.chris.org/cgi-bin/finddis Posteriormente crearé la función para calcular la distancia entre dos grids (dos puntos geográficos).
 
-Quizá después pueda adicionar una herramienta integrada para obtener estos datos.
 
 
 ¡Qué viva la Radio!
