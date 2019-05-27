@@ -6,6 +6,7 @@
 
 # Archivo temporal de intercambio
 TEMP=temp
+GRID=tempGrid
 # Editor
 editor=${EDITOR-nano swlog.csv}
 
@@ -38,15 +39,15 @@ function nuevo(){
 utc=$(date -u +%T)
 #date "+%A %d de %B de %Y"
 fecha=$(date '+%d/%m/%Y')
-dialog --backtitle "SWlog - nuevo registro" --title "Formato de registro" \
---form "Nuevo registro" 25 100 16 \
+dialog --backtitle "SWlog - nuevo registro" --title "Formato de nuevo registro en la bitácora" \
+--form "Nuevo - En el menú principal puede buscar el GRID de la estación y aparecerá automáticamente en este formato" 18 100 10 \
 "Estación:" 1 1 "" 1 18 25 30 \
 "Frecuencia (khz):" 2 1 "" 2 18 7 10 \
 "Hora:" 3 1 "$utc utc" 3 18 8 30 \
 "Fecha:" 4 1 "$fecha" 4 18 10 30 \
 "SINPO:" 5 1 "" 5 18 6 5 \
 "Modo:" 6 1 "A.M." 6 18 6 5 \
-"GRID:" 7 1 "" 7 18 7 6 \
+"GRID:" 7 1 "$(<"${GRID}")" 7 18 7 6 \
 "Distancia (kms):" 8 1 "" 8 18 9 8 \
 "Observaciones:" 9 1 "" 9  18 70 255 >"${TEMP}" \
  2>&1>/dev/tty
@@ -164,8 +165,9 @@ dialog --backtitle "SWlog - Buscar Grid Locator" --title "GRID" \
 #Revisamos que las variables no esten vacías y si no es así escribimos ejecutamos la búsqueda
 if [ $(<"${TEMP}") != "" ];
     then
- curl -s http://www.levinecentral.com/ham/grid_square.php?Address=$(<"${TEMP}") | grep 'Grid:' | grep -o -P '(?<=Grid: <font color="blue"><b>).*(?=</b>)' >>$TEMP
- display 8 25 "[ Resultado de búsqueda ]"
+ curl -s http://www.levinecentral.com/ham/grid_square.php?Address=$(<"${TEMP}") | grep 'Grid:' | grep -o -P '(?<=Grid: <font color="blue"><b>).*(?=</b>)' >$GRID
+ cat $GRID >$TEMP
+ display 5 25 "[ Resultado de búsqueda ]"
 fi
 }
 #
@@ -207,6 +209,7 @@ done
 
 #Borrar archivos temporales
 [ -f $TEMP ] && rm $TEMP
+[ -f $GRID ] && rm $GRID
 
 
 
