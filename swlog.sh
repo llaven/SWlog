@@ -155,6 +155,20 @@ function sinpo(){
   dialog  --backtitle 'SWlog - Código SINPO' --no-mouse   --title '[ CÓDIGO SINPO ]'  --textbox "${TEMP}" 20 110
 }
 #
+# GRID: Busca el Grid Locator de una localidad utilizando: http://www.levinecentral.com/ham/grid_square.php?Address=LUGAR
+#
+function grid(){
+dialog --backtitle "SWlog - Buscar Grid Locator" --title "GRID" \
+--form "Buscar..." 8 50 0 \
+"Grid a buscar:" 1 1 "" 1 18 20 30 2>"${TEMP}" 
+#Revisamos que las variables no esten vacías y si no es así escribimos ejecutamos la búsqueda
+if [ $(<"${TEMP}") != "" ];
+    then
+ curl -s http://www.levinecentral.com/ham/grid_square.php?Address=$(<"${TEMP}") | grep 'Grid:' | grep -o -P '(?<=Grid: <font color="blue"><b>).*(?=</b>)' >>$TEMP
+ display 8 25 "[ Resultado de búsqueda ]"
+fi
+}
+#
 # Menú principal
 #
 while true
@@ -163,11 +177,12 @@ utc=$(date -u +%T)
 local=$(date +%T)
 fecha=$(date '+%A %d de %B de %Y')
 #date "+%A %d de %B de %Y"
-dialog --backtitle "SWlog - $fecha - $utc UTC - $local LOCAL" --title "[ -= M E N Ú =- ]" --menu "Selecciones una opción..." 15 60 15 \
+dialog --backtitle "SWlog - $fecha - $utc UTC - $local LOCAL" --title "[ -= M E N Ú =- ]" --menu "Selecciones una opción..." 16 60 15 \
 Nuevo "registro" \
 Buscar "..." \
 Consultar "todos los registros" \
 Editar "log" \
+Grid "locator" \
 Reloj "Hora UTC" \
 SINPO "Info" \
 Calendario "Calendario" \
@@ -181,6 +196,7 @@ case $menuitem in
   Buscar) buscar;;
   Consultar) consultar;;
   Editar) $editor;;
+	Grid) grid;;
   Reloj) reloj;;
   SINPO) sinpo;;
   Calendario) calendario;;
