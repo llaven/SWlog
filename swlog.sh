@@ -89,7 +89,7 @@ dialog --backtitle "SWlog - Buscar en el log" --title "Formato de registro" \
 if [ $(<"${TEMP}") != "" ];
 		then
 		grep -w $(<"${TEMP}") swlog.csv >$TEMP
-		display 10 195 "[ Resultado de búsqueda ]"
+		dialog --backtitle '[ Resultados de búsqueda ]' --no-mouse --scrollbar --title '[ Coincidencias ]' --textbox "${TEMP}" 30 150
 fi
 }
 #
